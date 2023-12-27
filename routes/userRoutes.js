@@ -5,16 +5,16 @@ const {
   loginController,
 } = require("../controllers/userContoller");
 
-//router object
+// Router Object Creation
 const router = express.Router();
 
-// GET ALL USERS || GET
+// Get All Users
 router.get("/all-users", getAllUsers);
 
-// CREATE USER || POST
+// Sign Up
 router.post("/register", registerController);
 
-//LOGIN || POST
+// Login
 router.post("/login", loginController);
 
 module.exports = router;

@@ -5,6 +5,7 @@ const cors = require('cors')
 const colors = require('colors')
 const connectDB = require('./config/db')
 const userRoutes = require('./routes/userRoutes')
+const blogRoutes = require('./routes/blogRoutes')
 
 dotenv.config()
 
@@ -21,6 +22,7 @@ app.use(cors())
 
 // Routing
 app.use("/api/v1/users", userRoutes)
+app.use("/api/v1/blogs", blogRoutes)
 
 // Listener
 const port = process.env.PORT
