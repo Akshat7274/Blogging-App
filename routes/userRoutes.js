@@ -3,7 +3,7 @@ const {
   getAllUsers,
   registerController,
   loginController,
-} = require("../controllers/userContoller");
+} = require("../controllers/userController");
 
 // Router Object Creation
 const router = express.Router();

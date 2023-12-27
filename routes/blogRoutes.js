@@ -6,7 +6,7 @@ const {
   getBlogByIdController,
   deleteBlogController,
   userBlogControlller,
-} = require("../controllers/blogControlller");
+} = require("../controllers/blogController");
 
 // Router Object Creation
 const router = express.Router();

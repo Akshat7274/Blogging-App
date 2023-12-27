@@ -21,8 +21,8 @@ app.use(morgan('dev'))
 app.use(cors())
 
 // Routing
-app.use("/api/v1/users", userRoutes)
-app.use("/api/v1/blogs", blogRoutes)
+app.use("/api/v1/user", userRoutes)
+app.use("/api/v1/blog", blogRoutes)
 
 // Listener
 const port = process.env.PORT
