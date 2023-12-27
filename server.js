@@ -4,6 +4,7 @@ const morgan = require('morgan')
 const cors = require('cors')
 const colors = require('colors')
 const connectDB = require('./config/db')
+const userRoutes = require('./routes/userRoutes')
 
 dotenv.config()
 
@@ -19,9 +20,7 @@ app.use(morgan('dev'))
 app.use(cors())
 
 // Routing
-app.get("/",(req,res) => {
-    res.status(200).send("Hello Server!!")
-})
+app.use("/api/v1/users", userRoutes)
 
 // Listener
 const port = process.env.PORT
