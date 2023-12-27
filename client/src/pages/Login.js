@@ -31,7 +31,7 @@ const Login = () => {
         password: inputs.password,
       });
       if (data.success) {
-        localStorage.setItem("userId", data?.user._id);
+        localStorage.setItem("userId", data?.token);
         dispatch(authActions.login());
         toast.success("User login Successfully");
         navigate("/");

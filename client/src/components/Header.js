@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Box,
@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { authActions } from "../redux/store";
 import toast from "react-hot-toast";
+import axios from "axios";
 const Header = () => {
   // global state
   let isLogin = useSelector((state) => state.isLogin);
@@ -33,6 +34,19 @@ const Header = () => {
       console.log(error);
     }
   };
+  
+  const getUser = async () => {
+    try {
+      const user = await axios.post("/api/v1/user/get-user",{token:localStorage.getItem('userId')})
+      return user.data.decode._doc._id;
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    getUser();
+  })
   return (
     <>
       <AppBar position="sticky">

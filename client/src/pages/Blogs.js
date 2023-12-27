@@ -3,6 +3,7 @@ import axios from "axios";
 import BlogCard from "../components/BlogCard";
 const Blogs = () => {
   const [blogs, setBlogs] = useState([]);
+  const [id, setId] = useState("")
   //get blogs
   const getAllBlogs = async () => {
     try {
@@ -14,8 +15,19 @@ const Blogs = () => {
       console.log(error);
     }
   };
+
+  const getUser = async () => {
+    try {
+      const user = await axios.post("/api/v1/user/get-user",{token:localStorage.getItem('userId')})
+      setId(user.data.decode._doc._id);
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
     getAllBlogs();
+    getUser();
   }, []);
   return (
     <div>
@@ -23,7 +35,7 @@ const Blogs = () => {
         blogs.map((blog) => (
           <BlogCard
             id={blog?._id}
-            isUser={localStorage.getItem("userId") === blog?.user?._id}
+            isUser={id === blog?.user?._id}
             title={blog?.title}
             description={blog?.description}
             image={blog?.image}

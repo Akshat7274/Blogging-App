@@ -4,10 +4,19 @@ import BlogCard from "../components/BlogCard";
 const UserBlogs = () => {
   const [blogs, setBlogs] = useState([]);
 
+  const getUser = async () => {
+    try {
+      const user = await axios.post("/api/v1/user/get-user",{token:localStorage.getItem('userId')})
+      return user.data.decode._doc._id;
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   //get user blogs
   const getUserBlogs = async () => {
     try {
-      const id = localStorage.getItem("userId");
+      const id = await getUser();
       const { data } = await axios.get(`/api/v1/blog/user-blog/${id}`);
       if (data?.success) {
         setBlogs(data?.userBlog.blogs);

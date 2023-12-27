@@ -1,16 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Box, Button, InputLabel, TextField, Typography } from "@mui/material";
 import toast from "react-hot-toast";
 const CreateBlog = () => {
-  const id = localStorage.getItem("userId");
+  const [id, setId] = useState("");
   const navigate = useNavigate();
   const [inputs, setInputs] = useState({
     title: "",
     description: "",
     image: "",
   });
+
+  const getUser = async () => {
+    try {
+      const user = await axios.post("/api/v1/user/get-user",{token:localStorage.getItem('userId')})
+      setId(user.data.decode._doc._id);
+    } catch (error) {
+      console.log(error)
+    }
+  }
   // input change
   const handleChange = (e) => {
     setInputs((prevState) => ({
@@ -36,6 +45,9 @@ const CreateBlog = () => {
       console.log(error);
     }
   };
+  useEffect(() => {
+    getUser();
+  })
   return (
     <>
       <form onSubmit={handleSubmit}>

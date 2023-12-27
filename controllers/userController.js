@@ -1,5 +1,6 @@
 const userModel = require("../models/userModel");
 const bcrypt = require("bcrypt");
+const jwt = require('jsonwebtoken')
 
 // New User Registration
 exports.registerController = async (req, res) => {
@@ -89,10 +90,11 @@ exports.loginController = async (req, res) => {
         message: "Invlid Username/Password",
       });
     }
+    const token = jwt.sign({...user},process.env.JWT_SECRET)
     return res.status(200).send({
       success: true,
       messgae: "User Successfully Logged In",
-      user,
+      token,
     });
   } catch (error) {
     console.log(error);
@@ -103,3 +105,22 @@ exports.loginController = async (req, res) => {
     });
   }
 };
+
+// User Details from Token
+exports.getUser = async (req,res) => {
+  try {
+    const token = req.body.token;
+    const decode = jwt.verify(token,process.env.JWT_SECRET)
+    res.status(200).send({
+      success: true,
+      message: "User Successfully Fetched",
+      decode
+    })
+  } catch (error) {
+    res.status(500).send({
+      success: false,
+      message: "Invalid Token",
+      error
+    })
+  }
+}
